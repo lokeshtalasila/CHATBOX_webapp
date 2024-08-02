@@ -8,7 +8,20 @@ dotenv.config({
     path: './.env'
 });
 
-connectdb();
+connectdb()
+.then( () => {
+    app.on("error",(error) => {
+        console.log("error" , error);
+        throw error
+    })
+    const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running at port ${PORT}`);
+})
+})
+.catch( (err) => {
+    console.log("momgo failed" ,err)
+})
 
 app.get('/', (req, res) => {
     res.send('Server is ready');
@@ -16,9 +29,4 @@ app.get('/', (req, res) => {
 
 app.get('/twitter', (req, res) => {
     res.send('Are you ready');
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running at port ${PORT}`);
 });
