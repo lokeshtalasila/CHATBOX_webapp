@@ -1,18 +1,24 @@
-const express = require('express');
+import express from "express";
+import connectdb from "./db/index.js";
+import dotenv from "dotenv";
 
-const app = express()
+const app = express();
 
-app.get('/',(req,res) => {
-    res.send('Server is ready')
-})
+dotenv.config({
+    path: './.env'
+});
 
-app.get('/twitter',(req,res) => {
-    res.send('are you ready')
-})
-//get the list of five jokes
+connectdb();
 
-const port = process.env.PORT||3000;
+app.get('/', (req, res) => {
+    res.send('Server is ready');
+});
 
-app.listen(port ,() => {
-    console.log(`server is running at ${port}`)
+app.get('/twitter', (req, res) => {
+    res.send('Are you ready');
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running at port ${PORT}`);
 });
