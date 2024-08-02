@@ -1,9 +1,11 @@
 import express from "express";
 import connectdb from "./db/index.js";
 import dotenv from "dotenv";
+import { Server as SocketIOServer } from 'socket.io';
+
 
 const app = express();
-
+const PORT = process.env.PORT || 3000
 dotenv.config({
     path: './.env'
 });
@@ -14,26 +16,21 @@ connectdb()
         console.log("error" , error);
         throw error
     })
-    const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running at port ${PORT}`);
-})
-})
-.catch( (err) => {
-    console.log("momgo failed" ,err)
-})
+
 
 
 // server connection
-const server = app.listen(port, () => {});
+const server = app.listen(PORT, () => {
+  console.log(`Server is running at port ${PORT}`);
+})
 
-const io = require("socket.io")(server, {
-  pingTimeout: 60000,
-  cors: {
-    origin: process.env.ORIGIN,
-    methods: ["GET", "POST"],
-  },
-});
+const io = new SocketIOServer(server, {
+    pingTimeout: 60000,
+    cors: {
+      origin: process.env.CORS_ORIGIN,
+      methods: ["GET", "POST"],
+    },
+  });
 
 io.on("connection", (socket) => {
   socket.on("setup", (id) => {
@@ -55,4 +52,8 @@ io.on("connection", (socket) => {
   socket.off("setup", () => {
     socket.leave(userData._id);
   });
-});
+})
+})
+.catch((err) => {
+  console.log("mongo failed",err);
+})
