@@ -35,4 +35,4 @@ const sendMessage = asyncHandler(async (req, res, next) => {
   res.status(201).json(new ApiResponse(201, message));
 });
 
-export { getAllMessages, getMessage, sendMessage };
+export default { getAllMessages, getMessage, sendMessage };

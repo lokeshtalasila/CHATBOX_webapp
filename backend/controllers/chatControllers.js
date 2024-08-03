@@ -80,4 +80,4 @@ const getChats = asyncHandler(async (req, res, next) => {
     res.status(200).json(new ApiResponse(200, group));
   });
   
-  export { getChats, createChat, createGroup, renameGroup, removeFromGroup, addToGroup };
+  export default { getChats, createChat, createGroup, renameGroup, removeFromGroup, addToGroup };

@@ -18,4 +18,4 @@ chatRouter.put(
 );
 chatRouter.put("/addtogroup/:id", verifyUser, chatControllers.addToGroup);
 
-module.exports = chatRouter;
+export default  chatRouter;

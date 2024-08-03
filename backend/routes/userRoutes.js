@@ -9,4 +9,4 @@ userRouter.get("/searchuser/:id", verifyUser, userControllers.searchUser);
 userRouter.post("/login", userControllers.login);
 userRouter.post("/register", userControllers.register);
 
-module.exports = userRouter;
+export default userRouter;

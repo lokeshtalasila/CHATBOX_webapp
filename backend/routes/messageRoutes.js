@@ -20,4 +20,4 @@ messageRouter.post(
   messageControllers.sendMessage
 );
 
-module.exports = messageRouter;
+export default messageRouter;

@@ -2,13 +2,22 @@ import express from "express";
 import connectdb from "./db/index.js";
 import dotenv from "dotenv";
 import { Server as SocketIOServer } from 'socket.io';
-
+import chatRouter from "./routes/chatRoutes.js"
+import messageRouter from "./routes/messageRoutes.js"
+import userRouter from "./routes/userRoutes.js"
 
 const app = express();
 const PORT = process.env.PORT || 3000
 dotenv.config({
     path: './.env'
 });
+app.use(express.json());
+app.get('/', (req, res) => {
+res.send('Server is up and running');
+});
+app.use("/api/user", userRouter);
+app.use("/api/chat", chatRouter);
+app.use("/api/message", messageRouter);
 
 connectdb()
 .then( () => {

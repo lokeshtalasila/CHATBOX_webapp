@@ -53,6 +53,11 @@ const searchUser = asyncHandler(async (req, res, next) => {
   });
   
   const register = asyncHandler(async (req, res, next) => {
+    const { email, password, ...rest } = req.body;
+
+    if (!email || !password) {
+        return next(new ApiError(400, "Email and password are required"));
+    }
     const alreadyPresent = await User.findOne({ email: req.body.email });
     
     if (alreadyPresent) {
@@ -67,4 +72,4 @@ const searchUser = asyncHandler(async (req, res, next) => {
     res.status(201).json(new ApiResponse(201, "User registered successfully"));
   });
   
-  export { login, register, getUser, searchUser };
+  export default { login, register, getUser, searchUser };
