@@ -40,7 +40,7 @@ const searchUser = asyncHandler(async (req, res, next) => {
     const passwordMatch = await bcrypt.compare(req.body.password, user.password);
     
     if (!passwordMatch) {
-      return next(new ApiError(400, "Incorrect credentials"));
+      return next(new ApiError(400, "Incorrect password"));
     }
   
     const token = jwt.sign(
